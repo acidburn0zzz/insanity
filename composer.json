@@ -1,0 +1,40 @@
+{
+    "name": "lusito/insanity",
+    "description": "Extensible library for validating and sanitizing various input sources like $_POST and routing parameters.",
+    "version": "0.9",
+    "keywords": [
+        "input",
+        "field",
+        "validation",
+        "filtering",
+        "sanitization",
+        "sanitizing",
+        "rest",
+        "routing"
+    ],
+    "homepage": "https://github.com/lusito/insanity",
+    "license": "Zlib",
+    "authors": [{
+            "name": "Santo Pfingsten",
+            "email": "core@lusito.info",
+            "homepage": "https://github.com/lusito",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/lusito/insanity/issues",
+        "source": "https://github.com/lusito/insanity"
+    },
+    "require": {
+        "php": "^7.1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8",
+        "php-coveralls/php-coveralls": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lusito\\InSanity\\": "src/"
+        }
+    }
+}
