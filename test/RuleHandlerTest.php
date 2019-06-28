@@ -86,6 +86,26 @@ final class RuleHandlerTest extends TestCase
         ];
     }
 
-    // fixme: custom regex rules
-    // fixme: no custom rule & no php method => false
+    public function testNumberFormat()
+    {
+        $handler = new RuleHandler();
+        $this->assertSame('1.23', $handler->number_format(1.2345, 2));
+    }
+
+    public function testUnknownRule()
+    {
+        $handler = new RuleHandler();
+        $this->assertFalse($handler->woopwoop('test'));
+    }
+
+
+    public function testCustomRegex()
+    {
+        $handler = new RuleHandler([
+            'woop' => '/^(foo|bar)$/i'
+        ]);
+        $this->assertFalse($handler->woop('test'));
+        $this->assertTrue($handler->woop('foo'));
+        $this->assertTrue($handler->woop('bar'));
+    }
 }
