@@ -30,9 +30,11 @@ class Field
         if ($this->error)
             return $this;
 
-        // Special handling for required
+        // Special handling for some rules
         if ($rule === 'required' && empty($this->value)) {
             $this->setFailed('required');
+            return $this;
+        } else if ($this->value === null) {
             return $this;
         }
 
@@ -60,12 +62,14 @@ class Field
 
     public function __get($rule)
     {
+        if ($rule === 'boolval')
+            return $this->boolval();
         return $this->__call($rule, []);
     }
 
-    public function getValue()
+    public function getValue($default = null)
     {
-        return $this->value;
+        return $this->value ?? $default;
     }
 
     public function getError()
@@ -73,50 +77,26 @@ class Field
         return $this->error;
     }
 
-    private static function toBool($value)
+    public function default($default)
+    {
+        if ($this->value === null)
+            $this->value = $default;
+        return $this;
+    }
+
+    private static function asBool($value)
     {
         if (is_string($value))
             return !!filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
         return boolval($value);
     }
 
-    public function val($default = '')
+    public function boolval()
     {
-        if ($this->value === null)
-            $this->value = $default;
-        return $this->value;
-    }
-
-    public function boolval($default = false)
-    {
-        if ($this->value === null)
-            $this->value = $default;
-        else if ($this->isArray)
-            $this->value = array_map('self::toBool', $this->value);
-        else
-            $this->value = self::toBool($this->value);
-        return $this->value;
-    }
-
-    public function intval($default = 0)
-    {
-        if ($this->value === null)
-            $this->value = $default;
-        else if ($this->isArray)
-            $this->value = array_map('intval', $this->value);
-        else
-            $this->value = intval($this->value);
-        return $this->value;
-    }
-
-    public function floatval($default = 0.0)
-    {
-        if ($this->value === null)
-            $this->value = $default;
-        else if ($this->isArray)
-            $this->value = array_map('floatval', $this->value);
-        else
-            $this->value = floatval($this->value);
-        return $this->value;
+        if ($this->isArray)
+            $this->value = array_map('self::asBool', $this->value);
+        else if ($this->value !== null)
+            $this->value = self::asBool($this->value);
+        return $this;
     }
 }

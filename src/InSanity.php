@@ -32,4 +32,12 @@ class InSanity
     {
         return $this->errorHandler->getErrors();
     }
+
+    public function toJSON()
+    {
+        $json = [];
+        foreach ($this->fields as $name => $field)
+            $json[$name] = $field->getValue();
+        return $json;
+    }
 }

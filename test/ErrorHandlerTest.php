@@ -3,7 +3,7 @@ use Lusito\InSanity\ErrorHandler;
 
 final class ErrorHandlerTest extends TestCase
 {
-    public function testSetFailed(): void
+    public function testSetFailed()
     {
         $handler = new ErrorHandler();
         $this->assertEmpty($handler->getErrors());
@@ -26,7 +26,7 @@ final class ErrorHandlerTest extends TestCase
         ], $handler->getErrors());
     }
 
-    public function testSetFailedWithParam(): void
+    public function testSetFailedWithParam()
     {
         $handler = new ErrorHandler();
         $this->assertEmpty($handler->getErrors());

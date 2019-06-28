@@ -1,28 +1,9 @@
 <?php
 use Lusito\InSanity\InSanity;
 
-class CallAsserter
-{
-    private $test;
-    public $expectedCalls;
-    public function __construct($test, $expectedCalls)
-    {
-        $this->test = $test;
-        $this->expectedCalls = $expectedCalls;
-    }
-
-    public function __call($rule, $params)
-    {
-        $call = array_shift($this->expectedCalls);
-        $return = array_pop($call);
-        $this->test->assertEquals($call, [$rule, $params]);
-        return $return;
-    }
-}
-
 final class InSanityTest extends TestCase
 {
-    public function testDefaultInputNull(): void
+    public function testDefaultInputNull()
     {
         $_POST = ['test' => 'test-value1'];
         $in = new InSanity();
@@ -31,7 +12,7 @@ final class InSanityTest extends TestCase
         $this->assertSame('test-value1', $field->getValue());
     }
 
-    public function testDefaultInput(): void
+    public function testDefaultInput()
     {
         $data = ['test' => 'test-value2'];
         $in = new InSanity($data);
@@ -40,7 +21,7 @@ final class InSanityTest extends TestCase
         $this->assertSame('test-value2', $field->getValue());
     }
 
-    public function testDefaultInputParam(): void
+    public function testDefaultInputParam()
     {
         $data = ['test' => 'test-value3'];
         $in = new InSanity([]);
@@ -49,20 +30,20 @@ final class InSanityTest extends TestCase
         $this->assertSame('test-value3', $field->getValue());
     }
 
-    public function testNullField(): void
+    public function testNullField()
     {
         $in = new InSanity();
         $this->assertNull($in->test);
     }
 
-    public function testErrors(): void
+    public function testErrors()
     {
         $in = new InSanity([]);
         $in->test('Test field')->required;
         $this->assertEquals(['test' => 'The field "Test field" is required.'], $in->getErrors());
     }
 
-    public function testCustomClassValid(): void
+    public function testCustomClassValid()
     {
         $ruleHandler = new CallAsserter($this, [
             ['test', ['test-value', 'test-param'], true]
@@ -74,7 +55,7 @@ final class InSanityTest extends TestCase
         $this->assertEmpty($errorHandler->expectedCalls);
     }
 
-    public function testCustomClassInvalid(): void
+    public function testCustomClassInvalid()
     {
         $ruleHandler = new CallAsserter($this, [
             ['test_rule', ['test-value', 'test-param'], false]
@@ -89,5 +70,13 @@ final class InSanityTest extends TestCase
         $this->assertEmpty($ruleHandler->expectedCalls);
         $this->assertEmpty($errorHandler->expectedCalls);
         $this->assertSame('error-message', $in->test->getError());
+    }
+
+    public function testToJSON()
+    {
+        $in = new Insanity(['a' => ' x ', 'b' => ' y ', 'c' => ' z ']);
+        $in->a('A')->trim;
+        $in->b('B')->trim;
+        $this->assertEquals(['a' => 'x', 'b' => 'y'], $in->toJSON());
     }
 }
