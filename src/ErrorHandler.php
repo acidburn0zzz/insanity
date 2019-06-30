@@ -5,6 +5,11 @@ class ErrorHandler
     protected $errors = [];
     protected $translator = null;
 
+    public function __construct($translator = null)
+    {
+        $this->translator = $translator;
+    }
+
     public function setFailed($fieldName, $fieldLabel, $rule, $param = null)
     {
         $translator = $this->getTranslator();

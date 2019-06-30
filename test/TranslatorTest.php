@@ -3,7 +3,7 @@ use Lusito\InSanity\Translator;
 
 final class TranslatorTest extends TestCase
 {
-    public function testTranslateRule(): void
+    public function testTranslateRule()
     {
         $translator = new Translator();
 
@@ -24,17 +24,17 @@ final class TranslatorTest extends TestCase
             'unknown_rule' => 'unknown_rule (No translation found)'
         ];
 
-        foreach($expectations as $rule => $translation)
+        foreach ($expectations as $rule => $translation)
             $this->assertEquals($translation, $translator->translateRule($rule));
     }
 
-    public function testTranslateRuleWithCustomTranslations(): void
+    public function testTranslateRuleWithCustomTranslations()
     {
         $translator = new Translator([
             'is_alpha' => 'The input "{FIELD}" must only contain letters from a-z.',
             'unknown_rule' => 'Must be an unknown rule'
         ]);
-        
+
         $expectations = [
             'is_alpha' => 'The input "{FIELD}" must only contain letters from a-z.',
             'is_alnum' => 'The field "{FIELD}" must only contain letters from a-z and digits.',
@@ -53,11 +53,11 @@ final class TranslatorTest extends TestCase
             'unknown_rule_2' => 'unknown_rule_2 (No translation found)'
         ];
 
-        foreach($expectations as $rule => $translation)
+        foreach ($expectations as $rule => $translation)
             $this->assertEquals($translation, $translator->translateRule($rule));
     }
 
-    public function testTranslateField(): void
+    public function testTranslateField()
     {
         $translator = new Translator();
         $this->assertEquals(

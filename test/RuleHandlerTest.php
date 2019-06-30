@@ -22,7 +22,7 @@ final class RuleHandlerTest extends TestCase
     /**
      * @dataProvider ruleDataProvider
      */
-    public function testRule($rule, $trueValues, $falseValues, $allowWhite): void
+    public function testRule($rule, $trueValues, $falseValues, $allowWhite)
     {
         $handler = new RuleHandler();
         foreach (array_unique($trueValues) as $value) {
@@ -52,8 +52,8 @@ final class RuleHandlerTest extends TestCase
         $required = array_diff(array_merge($is_integer_not, $is_alpha_not), self::WHITE, self::EMPTY);
         return [
             ['is_alpha', self::ALPHA, $is_alpha_not, false],
-            ['is_alnum', $is_alnum , $is_alnum_not, false],
-            ['is_alnum_dash', $is_alnum_dash , $is_alnum_dash_not, false],
+            ['is_alnum', $is_alnum, $is_alnum_not, false],
+            ['is_alnum_dash', $is_alnum_dash, $is_alnum_dash_not, false],
             ['is_natural', array_merge(self::NATURAL_NO_ZERO, self::ZERO), array_merge($is_alnum_not, self::INTEGER), false],
             ['is_natural_no_zero', array_merge(self::NATURAL_NO_ZERO), array_merge($is_alnum_not, self::INTEGER, self::ZERO), false],
             ['is_integer', array_merge(self::NATURAL_NO_ZERO, self::ZERO, self::INTEGER), $is_integer_not, false],
@@ -64,11 +64,11 @@ final class RuleHandlerTest extends TestCase
         ];
     }
 
-    
+
     /**
      * @dataProvider ruleLengthDataProvider
      */
-    public function testLengthRule($rule, $length, $trueValues, $falseValues): void
+    public function testLengthRule($rule, $length, $trueValues, $falseValues)
     {
         $handler = new RuleHandler();
         foreach (array_unique($trueValues) as $value)
