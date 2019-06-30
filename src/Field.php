@@ -67,9 +67,9 @@ class Field
         return $this->__call($rule, []);
     }
 
-    public function getValue($default = null)
+    public function getValue()
     {
-        return $this->value ?? $default;
+        return $this->value;
     }
 
     public function getError()
