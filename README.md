@@ -167,7 +167,7 @@ The following rules are included in the built-in RuleHandler class:
 - `is_numeric` (a numeric value, prefixed by a + or a -)
 - `is_integer` (an integer value, prefixed by a + or a -)
 - `is_natural` (an integer value without prefix)
-- `is_natural` (an integer value without prefix and above zero)
+- `is_natural_no_zero` (an integer value without prefix and above zero)
 - `is_bool` (true|false|on|off|yes|no|1|0)
 - `valid_email` (a valid e-mail address)
 - `required` (the trimmed value may not be empty)
