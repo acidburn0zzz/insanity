@@ -47,11 +47,11 @@ use Lusito\InSanity\InSanity;
 //...
 
 $in = new InSanity(); // or new InSanity($_GET) if you want to use $_GET as default instead of $_POST.
-$siteId = $in->site_id('Site ID', $_GET)->required->is_natural->intval; // use $_GET as input instead of $_POST for this field
-$parentId = $in->parent_id('Parent ID')->required->is_natural->intval;
-$title = $in->title('Title')->required->trim->min_length(2)->max_length(255)->val;
-$slug = $in->slug('Slug')->max_length(255)->val;
-$visible = $in->visible('Visible')->required->is_bool->boolval;
+$in->site_id('Site ID', $_GET)->required->is_natural->intval; // use $_GET as input instead of $_POST for this field
+$in->parent_id('Parent ID')->required->is_natural->intval;
+$in->title('Title')->required->trim->min_length(2)->max_length(255);
+$in->slug('Slug')->max_length(255);
+$in->visible('Visible')->required->is_bool->boolval;
 
 $errors = $in->getErrors();
 if ($errors) {
@@ -59,9 +59,27 @@ if ($errors) {
     header('Content-Type: application/json');
     echo json_encode(['error' => "Invalid input!", 'validation_errors' => $errors], JSON_UNESCAPED_SLASHES);
 } else {
-    // instead of storing the results manually like above, you can just fetch an associative array like this:
+    // Get all values in an associative array:
     $json = $in->toJSON();
 }
+```
+
+Alternatively, you can grab the values manually like this:
+
+```php
+
+use Lusito\InSanity\InSanity;
+
+//...
+
+$in = new InSanity(); // or new InSanity($_GET) if you want to use $_GET as default instead of $_POST.
+$siteId = $in->site_id('Site ID', $_GET)->required->is_natural->intval->getValue(); // use $_GET as input instead of $_POST for this field
+$parentId = $in->parent_id('Parent ID')->required->is_natural->intval->getValue();
+$title = $in->title('Title')->required->trim->min_length(2)->max_length(255)->getValue();
+$slug = $in->slug('Slug')->max_length(255)->getValue();
+$visible = $in->visible('Visible')->required->is_bool->boolval->getValue();
+
+//...
 ```
 
 ### The classes
