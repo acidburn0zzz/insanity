@@ -25,13 +25,17 @@ class Field
         $this->error = $this->errorHandler->setFailed($this->name, $this->label, $rule, $param);
     }
 
+    private function hasNoValue() {
+        return $this->isArray ? empty($this->value) : trim($this->value) === '';
+    }
+
     public function __call($rule, $params)
     {
         if ($this->error)
             return $this;
 
         // Special handling for some rules
-        if ($rule === 'required' && empty($this->value)) {
+        if ($rule === 'required' && $this->hasNoValue()) {
             $this->setFailed('required');
             return $this;
         } else if ($this->value === null) {
