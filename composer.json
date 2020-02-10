@@ -1,7 +1,7 @@
 {
     "name": "lusito/insanity",
     "description": "Extensible library for validating and sanitizing various input sources like $_POST and routing parameters.",
-    "version": "1.0",
+    "version": "1.0.1",
     "keywords": [
         "input",
         "field",
