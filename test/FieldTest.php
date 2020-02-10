@@ -17,8 +17,8 @@ final class FieldTest extends TestCase
 
     public function testRequired()
     {
-        $validValues = ['a', ' a', 'a ', ['a', ' a', 'a ']];
-        $invalidValues = ['', ' ', "\n", "\r", ['', ' ', "\n", "\r"], [' ', 'a']];
+        $validValues = ['a', ' a', 'a ', '0', ['a', ' a', 'a ']];
+        $invalidValues = ['', ' ', "\n", "\r", ['', ' ', "\n", "\r"], [' ', 'a'], []];
 
         foreach ($validValues as $value) {
             $field = $this->createField($value);
